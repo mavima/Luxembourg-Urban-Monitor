@@ -1,6 +1,4 @@
 <eui-page>
-    <!-- <eui-page-header label="{{ 'page.home.title' | translate }}" /> -->
-
     <eui-page-content>
         <eui-page-columns>
             <eui-page-column>
@@ -9,11 +7,19 @@
                         <img
                             src="assets/images/geoportail.png"
                             alt="Luxembourg view"
-                            style="width: 100%; opacity: 0.5"
+                            style="width: 100%; opacity: 0.5; max-height: 100px"
                         />
-                        <h1 style="position: absolute; top: 0; right: 2rem">
+                        <h1
+                            style="
+                                position: absolute;
+                                top: 0;
+                                right: 2rem;
+                                height: 15vh;
+                            "
+                        >
                             Luxembourg Urban Monitor
                         </h1>
+                        <app-geoportail-map></app-geoportail-map>
                     </div>
                 </eui-page-column-body>
             </eui-page-column>
