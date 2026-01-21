@@ -1,5 +1,5 @@
 <eui-app>
-    <eui-app-toolbar>
+    <eui-app-toolbar *ngIf="!isAuthRoute">
         <eui-toolbar>
             <eui-toolbar-logo />
             <eui-toolbar-app appName="Luxembourg Urban Monitor" />
@@ -34,7 +34,7 @@
             <eui-language-selector />
         </eui-toolbar>
     </eui-app-toolbar>
-    <eui-app-sidebar>
+    <eui-app-sidebar *ngIf="!isAuthRoute">
         <eui-app-sidebar-body>
             <eui-app-sidebar-menu [items]="sidebarItems" />
         </eui-app-sidebar-body>

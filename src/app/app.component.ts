@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { EUI_LANGUAGE_SELECTOR } from '@eui/components/eui-language-selector';
-import { EUI_USER_PROFILE } from '@eui/components/eui-user-profile';
-import { EUI_ICON } from '@eui/components/eui-icon';
-import { EuiMenuItem } from '@eui/components/eui-menu';
-import { EUI_LAYOUT } from '@eui/components/layout';
+import { Component } from "@angular/core";
+import { TranslateModule } from "@ngx-translate/core";
+import { EUI_LANGUAGE_SELECTOR } from "@eui/components/eui-language-selector";
+import { EUI_USER_PROFILE } from "@eui/components/eui-user-profile";
+import { EUI_ICON } from "@eui/components/eui-icon";
+import { EuiMenuItem } from "@eui/components/eui-menu";
+import { EUI_LAYOUT } from "@eui/components/layout";
+import { Router, NavigationEnd } from "@angular/router";
+import { filter } from "rxjs/operators";
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
+    selector: "app-root",
+    templateUrl: "./app.component.html",
     imports: [
         TranslateModule,
         ...EUI_LAYOUT,
@@ -19,17 +21,37 @@ import { EUI_LAYOUT } from '@eui/components/layout';
 })
 export class AppComponent {
     sidebarItems: EuiMenuItem[] = [
-        { label: 'Home', url: 'screen/home' },
-        { label: 'Module 1', url: 'screen/module1', children: [
-            { label: 'page 1', url: 'screen/module1/page1' },
-            { label: 'page 2', url: 'screen/module1/page2' },
-        ] },
-        { label: 'Module 2', url: 'screen/module2' },
+        { label: "Home", url: "screen/home" },
+        {
+            label: "Module 1",
+            url: "screen/module1",
+            children: [
+                { label: "page 1", url: "screen/module1/page1" },
+                { label: "page 2", url: "screen/module1/page2" },
+            ],
+        },
+        { label: "Module 2", url: "screen/module2" },
     ];
     notificationItems = [
-        { label: 'Title label 1', subLabel: 'Subtitle label' },
-        { label: 'Title label 2', subLabel: 'Subtitle label' },
-        { label: 'Title label 3', subLabel: 'Subtitle label' },
-        { label: 'Title label 4', subLabel: 'Subtitle label' },
+        { label: "Title label 1", subLabel: "Subtitle label" },
+        { label: "Title label 2", subLabel: "Subtitle label" },
+        { label: "Title label 3", subLabel: "Subtitle label" },
+        { label: "Title label 4", subLabel: "Subtitle label" },
     ];
+
+    isAuthRoute = true;
+
+    constructor(private router: Router) {
+        // Add console logging to debug
+        this.checkRoute(this.router.url);
+        this.router.events
+            .pipe(filter((event) => event instanceof NavigationEnd))
+            .subscribe((event: NavigationEnd) => {
+                this.checkRoute(event.urlAfterRedirects);
+            });
+    }
+
+    private checkRoute(url: string): void {
+        this.isAuthRoute = url.includes("/auth/");
+    }
 }

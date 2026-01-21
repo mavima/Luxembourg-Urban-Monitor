@@ -1,5 +1,5 @@
 {
-    "name": "eui-angular-app",
+    "name": "lux-public-service-dashboard",
     "version": "21.0.2",
     "license": "EUPL-1.1",
     "scripts": {
@@ -22,12 +22,12 @@
         "@eui/deps-base": "21.0.2"
     },
     "devDependencies": {
-        "npm-run-all": "4.1.5",
-        "json-server": "1.0.0-beta.3",
-        "nodemon": "3.1.11",
-        "lowdb": "1.0.0",
         "body-parser": "1.20.3",
-        "express": "4.21.2"
+        "express": "4.21.2",
+        "json-server": "1.0.0-beta.3",
+        "lowdb": "1.0.0",
+        "nodemon": "3.1.11",
+        "npm-run-all": "4.1.5"
     },
     "resolutions": {
         "semver": ">=7.5.2",
