@@ -1,26 +1,32 @@
-# eUI starter app
+# 🇪🇺 Public Service Dashboard: Regional Monitoring
 
-## Development server
+A professional dashboard built with the **eUI Framework** for monitoring regional data, combining **Geoportail.lu** mapping with administrative task management.
 
-````npm start```` to start the angular project with node-express proxy mock server
+## 👥 The Team
 
-````npm run start-proxy```` to start the angular project with real backend proxy server deployed
+* **Maria** (Lead Developer): Architecture & Code Review
+* **Joe**: Frontend Components & API Integration
 
-````npm run build```` to build, lint and test your project for DEV
+## 🛠 Quick Start
+* `ng serve`: Start with (Development)
+* `npm start`: Start with **Mock Server** (Development)
+* `npm run start-proxy`: Start with **Real Backend**
+* `npm run build-prod`: Production build (Lint + Tests)
 
-````npm run build-prod```` to build, lint and test your project for PROD
+## 📍 Key Features
 
-````npm run build-prod-skip-test```` to build and lint your project for PROD - Unit test skipped - to be used on Bamboo plans
+| Feature | API / Source | eUI Component |
+| --- | --- | --- |
+| **Map View** | Geoportail.lu V4 | `eui-page` + `eui-sidebar` |
+| **Service Mgmt** | JSONPlaceholder | `eui-table` + `eui-card` |
+| **Data Insights** | Open Data Portal | `eui-charts` (ECharts) |
 
-````npm run build-prod-stats```` to build, lint and test your project for PROD - with stats.json file generated for webpack-bundle-analyzer input
+## 💡 Dev Notes
 
-* check package.json for more info on executable scripts provided
+* **State:** Powered by **Angular Signals** for reactive data fetching.
+* **Maps:** Requires Geoportail loader script in `index.html`.
+* **Workflow:** Feature branches only. PRs require approval from **Maria**.
 
-## Further help
+## 🆘 Resources
 
-- https://eui.ecdevops.eu
-
-- register on [MS Teams](https://teams.microsoft.com/l/team/19%3a2f5bb6b7d1e24c4aabaa62229d3e1955%40thread.tacv2/conversations?groupId=fb6def72-c57b-4e8f-a82e-49be65d6e1f5&tenantId=b24c8b06-522c-46fe-9080-70926f8dddb1) with your EC mail account, for extra-muros please send a mail to DIGIT-EUI-SUPPORT@ec.europa.eu
-
-- For bugs / request new features : Drop us an email at : DIGIT-EUI-SUPPORT@ec.europa.eu
-
+* [eUI Documentation](https://eui.ecdevops.eu)

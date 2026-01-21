@@ -1,0 +1,149 @@
+<eui-page>
+    <eui-page-content
+        class="eui-u-display-flex eui-u-flex-justify-content-center eui-u-flex-align-items-center"
+        style="min-height: 100vh"
+    >
+        <div class="eui-u-mb-l">
+            <img
+                src="/assets/images/logo.png"
+                alt="App Logo"
+                style="height: 60px"
+            />
+        </div>
+
+        <eui-card style="width: 400px; max-width: 90%">
+            <eui-card-header style="background-color: rgb(169, 180, 193)">
+                <eui-card-header-title style="color: white"
+                    >Sign Up</eui-card-header-title
+                >
+                <eui-card-header-subtitle
+                    >Create your account below</eui-card-header-subtitle
+                >
+            </eui-card-header>
+
+            <eui-card-content>
+                <div class="row">
+                    <div class="eui-u-mb-l">
+                        <eui-alert euiSuccess isCloseable *ngIf="isSuccess"
+                            >Account created successfully! Redirecting to
+                            login...
+                        </eui-alert>
+                        <br />
+
+                        <eui-alert euiDanger isCloseable *ngIf="isError"
+                            >There was an error creating your account!
+                        </eui-alert>
+                    </div>
+
+                    <form [formGroup]="signUpForm">
+                        <div euiInputGroup>
+                            <div euiInputGroupAddOn>
+                                <input
+                                    euiInputText
+                                    id="username-form"
+                                    formControlName="username"
+                                    placeholder="Username - e.g: george.clooney"
+                                />
+                            </div>
+                            @if (render("username")) {
+                                <eui-feedback-message euiDanger
+                                    >Username is required</eui-feedback-message
+                                >
+                            }
+                        </div>
+                        <div euiInputGroup>
+                            <div euiInputGroupAddOn>
+                                <input
+                                    euiInputText
+                                    id="email-form"
+                                    formControlName="email"
+                                    placeholder="Email - e.g: george@example.com"
+                                    type="email"
+                                />
+                            </div>
+                            @if (render("email")) {
+                                <eui-feedback-message euiDanger
+                                    >Valid email is
+                                    required</eui-feedback-message
+                                >
+                            }
+                        </div>
+                        <div euiInputGroup>
+                            <div euiInputGroupAddOn>
+                                <input
+                                    euiInputText
+                                    id="password-form"
+                                    formControlName="password"
+                                    placeholder="Password - minimum 8 characters"
+                                    type="password"
+                                />
+                            </div>
+                            @if (render("password")) {
+                                <eui-feedback-message euiDanger
+                                    >Password must be at least 8
+                                    characters</eui-feedback-message
+                                >
+                            }
+                        </div>
+                        <div euiInputGroup>
+                            <div euiInputGroupAddOn>
+                                <input
+                                    euiInputText
+                                    id="confirm-password-form"
+                                    formControlName="confirmPassword"
+                                    placeholder="Confirm Password"
+                                    type="password"
+                                />
+                            </div>
+                            @if (render("confirmPassword")) {
+                                <eui-feedback-message euiDanger
+                                    >Passwords must match</eui-feedback-message
+                                >
+                            }
+                        </div>
+                        <br />
+                    </form>
+                </div>
+
+                <div
+                    class="eui-u-display-flex eui-u-flex-justify-content-end eui-u-mt-s"
+                >
+                    <button
+                        euiButton
+                        euiOutline
+                        euiPrimary
+                        class="eui-u-mr-s"
+                        (click)="onReset()"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        euiButton
+                        euiPrimary
+                        (click)="onSubmit()"
+                        [disabled]="isDisabled"
+                    >
+                        Sign Up
+                    </button>
+                </div>
+
+                <div class="eui-u-text-center eui-u-mt-m">
+                    <p>
+                        Already have an account?
+                        <a
+                            href="javascript:void(0)"
+                            (click)="navigateToSignIn()"
+                            style="
+                                color: var(--eui-color-primary);
+                                cursor: pointer;
+                                text-decoration: underline;
+                            "
+                        >
+                            Sign In
+                        </a>
+                    </p>
+                </div>
+            </eui-card-content>
+        </eui-card>
+    </eui-page-content>
+</eui-page>
