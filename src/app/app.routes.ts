@@ -1,8 +1,4 @@
 import { Routes } from "@angular/router";
-<<<<<<< HEAD
-=======
-import { Users } from "./features/users/users";
->>>>>>> f43bb7c (created user and route)
 
 export const routes: Routes = [
     { path: "", redirectTo: "screen/home", pathMatch: "full" },
@@ -39,6 +35,8 @@ export const routes: Routes = [
             import("./features/auth/signup/signup.routes").then(
                 (m) => m.AUTH_SIGNUP_ROUTES,
             ),
+    },
+    {
         path: "screen/users",
         loadChildren: () =>
             import("./features/users/users.routes").then((m) => m.USERS_ROUTES),

@@ -1,25 +1,37 @@
-import { Component } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    inject,
+} from "@angular/core";
+import { Router, NavigationEnd } from "@angular/router";
+import { filter } from "rxjs/operators";
+import { CommonModule } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
+
 import { EUI_LANGUAGE_SELECTOR } from "@eui/components/eui-language-selector";
 import { EUI_USER_PROFILE } from "@eui/components/eui-user-profile";
 import { EUI_ICON } from "@eui/components/eui-icon";
-import { EuiMenuItem } from "@eui/components/eui-menu";
 import { EUI_LAYOUT } from "@eui/components/layout";
-import { Router, NavigationEnd } from "@angular/router";
-import { filter } from "rxjs/operators";
+import { EuiMenuItem } from "@eui/components/eui-menu";
 
 @Component({
     selector: "app-root",
     templateUrl: "./app.component.html",
     imports: [
+        CommonModule,
         TranslateModule,
         ...EUI_LAYOUT,
         ...EUI_ICON,
         ...EUI_USER_PROFILE,
         ...EUI_LANGUAGE_SELECTOR,
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
+    private readonly router = inject(Router);
+    private readonly cdr = inject(ChangeDetectorRef);
+
     sidebarItems: EuiMenuItem[] = [
         { label: "Home", url: "screen/home" },
         {
@@ -32,26 +44,29 @@ export class AppComponent {
         },
         { label: "Module 2", url: "screen/module2" },
     ];
+
     notificationItems = [
         { label: "Title label 1", subLabel: "Subtitle label" },
         { label: "Title label 2", subLabel: "Subtitle label" },
-        { label: "Title label 3", subLabel: "Subtitle label" },
-        { label: "Title label 4", subLabel: "Subtitle label" },
     ];
 
-    isAuthRoute = true;
+    isAuthRoute = false;
 
-    constructor(private router: Router) {
-        // Add console logging to debug
-        this.checkRoute(this.router.url);
+    constructor() {
+        // Defer initial route evaluation to avoid NG0100 error
+        queueMicrotask(() => {
+            this.updateRoute(this.router.url);
+        });
+
         this.router.events
-            .pipe(filter((event) => event instanceof NavigationEnd))
-            .subscribe((event: NavigationEnd) => {
-                this.checkRoute(event.urlAfterRedirects);
+            .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+            .subscribe((event) => {
+                this.updateRoute(event.urlAfterRedirects);
             });
     }
 
-    private checkRoute(url: string): void {
+    private updateRoute(url: string): void {
         this.isAuthRoute = url.includes("/auth/");
+        this.cdr.markForCheck();
     }
 }

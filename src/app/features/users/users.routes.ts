@@ -1,4 +1,3 @@
-// users.routes.ts
 import { Routes } from "@angular/router";
 import { Users } from "./users";
 
