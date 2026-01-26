@@ -7,3 +7,16 @@
     min-height: 400px;
     width: 100%;
 }
+
+.eui-avatar-wrapper {
+    padding-left: 0 !important;
+
+    .eui-avatar-content {
+        font-size: 0.8rem;
+        padding-left: 0.5rem;
+
+        .eui-avatar-content-label {
+            text-wrap: auto;
+        }
+    }
+}

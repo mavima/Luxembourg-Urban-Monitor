@@ -23,14 +23,31 @@
                     </div>
                 </eui-page-column-body>
             </eui-page-column>
-            <eui-page-column class="eui-page-column--size-m">
+            <eui-page-column class="eui-page-column--size-l">
                 <eui-page-column-body>
-                    <ul>
-                        <li>User</li>
-                        <li>User</li>
-                        <li>User</li>
-                        <li>User</li>
-                        <li>User</li>
+                    <h2>Users</h2>
+                    <ul *ngIf="!loading()" euiList>
+                        <li
+                            euiListItem
+                            euiPrimary
+                            *ngFor="let user of users()"
+                            class="eui-avatar-wrapper"
+                        >
+                            <eui-avatar-image
+                                class="eui-avatar-image eui-avatar-image--default"
+                            >
+                                <eui-avatar-icon>
+                                    <eui-icon-svg
+                                        icon="person-circle:outline"
+                                    ></eui-icon-svg>
+                                </eui-avatar-icon>
+                            </eui-avatar-image>
+                            <eui-avatar-content class="eui-avatar-content">
+                                <eui-avatar-content-label>
+                                    {{ user.name }}
+                                </eui-avatar-content-label>
+                            </eui-avatar-content>
+                        </li>
                     </ul>
                 </eui-page-column-body>
             </eui-page-column>
