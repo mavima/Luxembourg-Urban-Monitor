@@ -39,8 +39,15 @@ export const routes: Routes = [
             ),
     },
     {
-        path: "screen/users",
+        path: "users",
         loadChildren: () =>
             import("./features/users/users.routes").then((m) => m.USERS_ROUTES),
+    },
+    {
+        path: "maps",
+        loadChildren: () =>
+            import("./features/map/geoportail-map/maps.routes").then(
+                (m) => m.MAPS_ROUTES,
+            ),
     },
 ];

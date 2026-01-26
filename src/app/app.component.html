@@ -2,34 +2,19 @@
     <eui-app-toolbar *ngIf="!isAuthRoute">
         <eui-toolbar>
             <eui-toolbar-logo />
-            <eui-toolbar-app appName="Public Service Dashboard" />
-            <!-- <eui-toolbar-environment>MOCK</eui-toolbar-environment> -->
-
-            <!-- <eui-toolbar-items>
+            <eui-toolbar-app appName="Luxembourg Urban Monitor" />
+            <eui-toolbar-items>
                 <eui-toolbar-item>
                     <eui-user-profile isShowAvatarInitials>
                         <eui-user-profile-menu>
-                            <eui-user-profile-menu-item>
-                                <eui-icon-svg icon="user:regular" />{{
-                                    "eui.my-profile-informations" | translate
-                                }}
-                            </eui-user-profile-menu-item>
-                            <eui-user-profile-menu-item>
-                                <eui-icon-svg icon="sign-out:regular" />{{
-                                    "eui.sign-out" | translate
-                                }}
+                            <eui-user-profile-menu-item (click)="onLogout()">
+                                <eui-icon-svg icon="sign-out:regular" />
+                                {{ "eui.sign-out" | translate }}
                             </eui-user-profile-menu-item>
                         </eui-user-profile-menu>
                     </eui-user-profile>
                 </eui-toolbar-item>
-
-                <eui-toolbar-item>
-                    <eui-notifications
-                        [count]="notificationItems.length"
-                        [items]="notificationItems"
-                    />
-                </eui-toolbar-item>
-            </eui-toolbar-items> -->
+            </eui-toolbar-items>
 
             <eui-language-selector />
         </eui-toolbar>

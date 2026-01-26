@@ -14,6 +14,8 @@ import { EUI_USER_PROFILE } from "@eui/components/eui-user-profile";
 import { EUI_ICON } from "@eui/components/eui-icon";
 import { EUI_LAYOUT } from "@eui/components/layout";
 import { EuiMenuItem } from "@eui/components/eui-menu";
+import { Store } from "@ngrx/store";
+import { AuthActions } from "./core/stores/auth/auth.actions";
 
 @Component({
     selector: "app-root",
@@ -29,11 +31,18 @@ import { EuiMenuItem } from "@eui/components/eui-menu";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
+    private readonly store = inject(Store);
     private readonly router = inject(Router);
     private readonly cdr = inject(ChangeDetectorRef);
 
     sidebarItems: EuiMenuItem[] = [
-        { label: "Home", url: "home" },
+        {
+            label: "Home",
+            url: "home",
+        },
+        { label: "Urban Maps", url: "maps" },
+        { label: "User Directory", url: "users" },
+        { label: "Products", url: "products" },
         {
             label: "Module 1",
             url: "module1",
@@ -63,6 +72,10 @@ export class AppComponent {
             .subscribe((event) => {
                 this.updateRoute(event.urlAfterRedirects);
             });
+    }
+
+    onLogout() {
+        this.store.dispatch(AuthActions.logout());
     }
 
     private updateRoute(url: string): void {

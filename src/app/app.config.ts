@@ -1,4 +1,4 @@
-import { inject, provideAppInitializer } from "@angular/core";
+import { inject, isDevMode, provideAppInitializer } from "@angular/core";
 import { ApplicationConfig, importProvidersFrom } from "@angular/core";
 import { provideRouter } from "@angular/router";
 import { Observable } from "rxjs";
@@ -30,6 +30,11 @@ import { appConfig as euiAppConfig } from "../config";
 import { environment } from "../environments/environment";
 import { provideAnimations } from "@angular/platform-browser/animations";
 import { authInterceptor } from "./core/interceptors/auth.interceptor";
+import { provideStore } from "@ngrx/store";
+import { provideEffects } from "@ngrx/effects";
+import { authReducer } from "./core/stores/auth/auth.reducer";
+import { AuthEffects } from "./core/stores/auth/auth.effects";
+import { provideStoreDevtools } from "@ngrx/store-devtools";
 
 /**
  * The provided function is injected at application startup and executed during
@@ -89,5 +94,14 @@ export const appConfig: ApplicationConfig = {
         AppStarterService,
         provideRouter(routes),
         provideAnimations(),
+        provideStore({ auth: authReducer }),
+        provideEffects([AuthEffects]),
+        provideStoreDevtools({
+            maxAge: 25, // Retains last 25 states
+            logOnly: !isDevMode(), // Only allows logging in production
+            autoPause: true, // Pauses when the tab isn't active
+            trace: false, // Set to true to see the stack trace for each action
+            traceLimit: 75,
+        }),
     ],
 };

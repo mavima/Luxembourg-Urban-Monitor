@@ -3,35 +3,131 @@
         <eui-page-columns>
             <eui-page-column>
                 <eui-page-column-body>
-                    <div class="main-container" style="position: relative">
+                    <div
+                        class="hero-header"
+                        style="position: relative; margin-bottom: 2rem"
+                    >
                         <img
                             src="assets/images/geoportail.png"
                             alt="Luxembourg view"
-                            style="width: 100%; opacity: 0.5; max-height: 100px"
+                            style="
+                                width: 100%;
+                                opacity: 0.4;
+                                max-height: 150px;
+                                object-fit: cover;
+                                border-radius: 8px;
+                            "
                         />
                         <h1
                             style="
                                 position: absolute;
-                                top: 0;
-                                right: 2rem;
-                                height: 15vh;
+                                display: flex;
+                                top: 40%;
+                                left: 30%;
+                                margin: 0;
+                                color: #003366;
+                                text-align: center;
                             "
                         >
                             Luxembourg Urban Monitor
                         </h1>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="cta-card">
+                            <div class="cta-content">
+                                <h3>Urban Maps</h3>
+                                <p>
+                                    Access real-time geospatial data and urban
+                                    planning layers from Geoportail.
+                                </p>
+                                <button
+                                    euiButton
+                                    [euiPrimary]="true"
+                                    routerLink="/maps"
+                                >
+                                    Explore Maps
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="cta-card">
+                            <div class="cta-content">
+                                <h3>User Directory</h3>
+                                <p>
+                                    Manage platform users, permissions, and
+                                    profiles via mock API data.
+                                </p>
+                                <button
+                                    euiButton
+                                    [euiPrimary]="true"
+                                    routerLink="/users"
+                                >
+                                    View Users
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="cta-card">
+                            <div class="cta-content">
+                                <h3>User Products</h3>
+                                <p>
+                                    Analyze product distribution and inventory
+                                    assigned per user category.
+                                </p>
+                                <button
+                                    euiButton
+                                    [euiPrimary]="true"
+                                    routerLink="/module1"
+                                >
+                                    Manage Products
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="cta-card">
+                            <div class="cta-content">
+                                <h3>Campaigns & Coupons</h3>
+                                <p>
+                                    Monitor active discount coupons and urban
+                                    promotional campaigns.
+                                </p>
+                                <button
+                                    euiButton
+                                    [euiPrimary]="true"
+                                    routerLink="/module2"
+                                >
+                                    View Coupons
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem">
+                        <h3>Quick Map Preview</h3>
                         <app-geoportail-map></app-geoportail-map>
                     </div>
                 </eui-page-column-body>
             </eui-page-column>
+
             <eui-page-column class="eui-page-column--size-m">
                 <eui-page-column-body>
-                    <ul>
-                        <li>User</li>
-                        <li>User</li>
-                        <li>User</li>
-                        <li>User</li>
-                        <li>User</li>
-                    </ul>
+                    <div class="info-panel">
+                        <h3>System Status</h3>
+                        <p>
+                            <small
+                                >Connected to:
+                                <strong>JSONPlaceholder / Mockae</strong></small
+                            >
+                        </p>
+                        <hr />
+                        <h4>Recent Activity</h4>
+                        <ul class="activity-list">
+                            <li>Map layer "Urban_2025" updated</li>
+                            <li>New user batch imported</li>
+                            <li>Coupons sync completed</li>
+                        </ul>
+                    </div>
                 </eui-page-column-body>
             </eui-page-column>
         </eui-page-columns>
