@@ -14,7 +14,7 @@ import {
 } from "@eui/components/externals/charts";
 // import { EuiAppShellService } from "@eui/core";
 import { CommonModule } from "@angular/common";
-import { UsersStore, WeeklyAvailability } from "../../core/stores/users.store";
+import { UsersStore } from "../../core/stores/users.store";
 
 @Component({
     selector: "app-users",
