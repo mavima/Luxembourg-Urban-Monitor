@@ -1,0 +1,64 @@
+<eui-page>
+    <eui-page-content>
+        <p *ngIf="loading()">Loading users…</p>
+
+        <div *ngIf="!loading()" class="eui-table__scrollable-wrapper">
+            <table euiTable isTableCompact [data]="users()">
+                <ng-template euiTemplate="header">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Posts</th>
+                    </tr>
+                </ng-template>
+
+                <ng-template let-user euiTemplate="body">
+                    <tr>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.postCount }}</td>
+                    </tr>
+                </ng-template>
+            </table>
+        </div>
+        <div class="dashboard-row" *ngIf="!loading()">
+            <eui-card euiNoContentPadding>
+                <eui-card-header>
+                    <eui-card-header-title>
+                        Average availability per weekday
+                    </eui-card-header-title>
+                </eui-card-header>
+
+                <eui-card-content>
+                    <eui-apex-chart
+                        [series]="series()"
+                        [chart]="chart"
+                        [stroke]="stroke"
+                        [xaxis]="xaxis"
+                        [yaxis]="yaxis"
+                    >
+                    </eui-apex-chart>
+                </eui-card-content>
+            </eui-card>
+
+            <eui-card euiNoContentPadding>
+                <eui-card-header>
+                    <eui-card-header-title>
+                        Publishing frequency per user
+                    </eui-card-header-title>
+                </eui-card-header>
+
+                <eui-card-content>
+                    <eui-apex-chart
+                        [series]="seriesColumns()"
+                        [chart]="chartColumns"
+                        [xaxis]="xaxisColumns"
+                        [plotOptions]="plotOptions"
+                        [dataLabels]="dataLabelsColumns"
+                    >
+                    </eui-apex-chart>
+                </eui-card-content>
+            </eui-card>
+        </div>
+    </eui-page-content>
+</eui-page>

@@ -1,0 +1,6 @@
+{
+    "production": false,
+    "lang": "en",
+    "supportedLanguages": ["en", "fr"],
+    "applicationName": "Public Service Dashboard"
+}
