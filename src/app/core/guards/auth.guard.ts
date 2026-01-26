@@ -1,8 +1,10 @@
 import { inject } from "@angular/core";
 import { Router, CanActivateFn } from "@angular/router";
 import { AuthService } from "../services/auth.service";
+import { GLOBAL_ROUTES } from "src/config/routes";
 
 export const authGuard: CanActivateFn = (route, state) => {
+    const routes = GLOBAL_ROUTES;
     const authService = inject(AuthService);
     const router = inject(Router);
 
@@ -11,6 +13,6 @@ export const authGuard: CanActivateFn = (route, state) => {
     }
 
     // Redirect to login page
-    router.navigate(["/auth/login"], { queryParams: { returnUrl: state.url } });
+    router.navigate([routes.login], { queryParams: { returnUrl: state.url } });
     return false;
 };

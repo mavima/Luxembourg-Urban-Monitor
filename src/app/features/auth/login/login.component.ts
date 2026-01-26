@@ -56,13 +56,13 @@ export class LoginComponent {
 
             // Redirect to /screen/home after 3 seconds
             setTimeout(() => {
-                this.router.navigate(["/screen/home"]);
+                this.router.navigate(["/home"]);
             }, 3000);
         }
     }
 
     navigateToSignUp() {
-        this.router.navigate(["/screen/auth/signup"]);
+        this.router.navigate(["/auth/signup"]);
     }
 
     render(controlName: string): boolean {

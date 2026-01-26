@@ -1,14 +1,19 @@
-import { inject, provideAppInitializer } from '@angular/core';
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { Observable } from 'rxjs';
+import { inject, provideAppInitializer } from "@angular/core";
+import { ApplicationConfig, importProvidersFrom } from "@angular/core";
+import { provideRouter } from "@angular/router";
+import { Observable } from "rxjs";
 
-import { routes } from './app.routes';
-import { AppStarterService } from './app-starter.service';
+import { routes } from "./app.routes";
+import { AppStarterService } from "./app-starter.service";
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from "@ngx-translate/core";
 
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+    HTTP_INTERCEPTORS,
+    provideHttpClient,
+    withInterceptors,
+    withInterceptorsFromDi,
+} from "@angular/common/http";
 import {
     CachePreventionInterceptor,
     CorsSecurityInterceptor,
@@ -19,11 +24,12 @@ import {
     EUI_CONFIG_TOKEN,
     provideEuiInitializer,
     EuiServiceStatus,
-} from '@eui/core';
+} from "@eui/core";
 
-import { appConfig as euiAppConfig} from '../config';
-import { environment } from '../environments/environment';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { appConfig as euiAppConfig } from "../config";
+import { environment } from "../environments/environment";
+import { provideAnimations } from "@angular/platform-browser/animations";
+import { authInterceptor } from "./core/interceptors/auth.interceptor";
 
 /**
  * The provided function is injected at application startup and executed during
@@ -39,7 +45,7 @@ export const appConfig: ApplicationConfig = {
     providers: [
         {
             provide: EUI_CONFIG_TOKEN,
-            useValue: { appConfig: euiAppConfig, environment }
+            useValue: { appConfig: euiAppConfig, environment },
         },
         {
             // Sets the withCredentials on Ajax Request to send the JSESSIONID cookie to another domain.
@@ -72,10 +78,13 @@ export const appConfig: ApplicationConfig = {
         },
         provideEuiInitializer(),
         provideAppInitializer(init),
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(
+            withInterceptorsFromDi(),
+            withInterceptors([authInterceptor]),
+        ),
         importProvidersFrom(
             EuiCoreModule.forRoot(),
-            TranslateModule.forRoot(translateConfig)
+            TranslateModule.forRoot(translateConfig),
         ),
         AppStarterService,
         provideRouter(routes),

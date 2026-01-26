@@ -21,16 +21,16 @@ import { filter } from "rxjs/operators";
 })
 export class AppComponent {
     sidebarItems: EuiMenuItem[] = [
-        { label: "Home", url: "screen/home" },
+        { label: "Home", url: "home" },
         {
             label: "Module 1",
-            url: "screen/module1",
+            url: "module1",
             children: [
-                { label: "page 1", url: "screen/module1/page1" },
-                { label: "page 2", url: "screen/module1/page2" },
+                { label: "page 1", url: "module1/page1" },
+                { label: "page 2", url: "module1/page2" },
             ],
         },
-        { label: "Module 2", url: "screen/module2" },
+        { label: "Module 2", url: "module2" },
     ];
     notificationItems = [
         { label: "Title label 1", subLabel: "Subtitle label" },
