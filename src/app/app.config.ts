@@ -1,14 +1,19 @@
-import { inject, provideAppInitializer } from '@angular/core';
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { Observable } from 'rxjs';
+import { inject, isDevMode, provideAppInitializer } from "@angular/core";
+import { ApplicationConfig, importProvidersFrom } from "@angular/core";
+import { provideRouter } from "@angular/router";
+import { Observable } from "rxjs";
 
-import { routes } from './app.routes';
-import { AppStarterService } from './app-starter.service';
+import { routes } from "./app.routes";
+import { AppStarterService } from "./app-starter.service";
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from "@ngx-translate/core";
 
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+    HTTP_INTERCEPTORS,
+    provideHttpClient,
+    withInterceptors,
+    withInterceptorsFromDi,
+} from "@angular/common/http";
 import {
     CachePreventionInterceptor,
     CorsSecurityInterceptor,
@@ -19,11 +24,17 @@ import {
     EUI_CONFIG_TOKEN,
     provideEuiInitializer,
     EuiServiceStatus,
-} from '@eui/core';
+} from "@eui/core";
 
-import { appConfig as euiAppConfig} from '../config';
-import { environment } from '../environments/environment';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { appConfig as euiAppConfig } from "../config";
+import { environment } from "../environments/environment";
+import { provideAnimations } from "@angular/platform-browser/animations";
+import { authInterceptor } from "./core/interceptors/auth.interceptor";
+import { provideStore } from "@ngrx/store";
+import { provideEffects } from "@ngrx/effects";
+import { authReducer } from "./core/stores/auth/auth.reducer";
+import { AuthEffects } from "./core/stores/auth/auth.effects";
+import { provideStoreDevtools } from "@ngrx/store-devtools";
 
 /**
  * The provided function is injected at application startup and executed during
@@ -39,7 +50,7 @@ export const appConfig: ApplicationConfig = {
     providers: [
         {
             provide: EUI_CONFIG_TOKEN,
-            useValue: { appConfig: euiAppConfig, environment }
+            useValue: { appConfig: euiAppConfig, environment },
         },
         {
             // Sets the withCredentials on Ajax Request to send the JSESSIONID cookie to another domain.
@@ -72,13 +83,25 @@ export const appConfig: ApplicationConfig = {
         },
         provideEuiInitializer(),
         provideAppInitializer(init),
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(
+            withInterceptorsFromDi(),
+            withInterceptors([authInterceptor]),
+        ),
         importProvidersFrom(
             EuiCoreModule.forRoot(),
-            TranslateModule.forRoot(translateConfig)
+            TranslateModule.forRoot(translateConfig),
         ),
         AppStarterService,
         provideRouter(routes),
         provideAnimations(),
+        provideStore({ auth: authReducer }),
+        provideEffects([AuthEffects]),
+        provideStoreDevtools({
+            maxAge: 25, // Retains last 25 states
+            logOnly: !isDevMode(), // Only allows logging in production
+            autoPause: true, // Pauses when the tab isn't active
+            trace: false, // Set to true to see the stack trace for each action
+            traceLimit: 75,
+        }),
     ],
 };

@@ -1,4 +1,5 @@
 import { GlobalConfig } from "@eui/core";
+import { GLOBAL_ROUTES } from "./routes";
 
 export const GLOBAL: GlobalConfig = {
     appTitle: "CSDR-app",
@@ -30,4 +31,5 @@ export const GLOBAL: GlobalConfig = {
             lang: "en",
         },
     },
+    routes: GLOBAL_ROUTES,
 };

@@ -4,6 +4,8 @@ import { SHARED_UI_MODULES } from "src/app/shared-modules";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { EuiGrowlService } from "@eui/core";
 import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { AuthActions } from "src/app/core/stores/auth/auth.actions";
 
 @Component({
     selector: "app-login",
@@ -14,7 +16,8 @@ import { Router } from "@angular/router";
 })
 export class LoginComponent {
     protected config: EuiAppConfig = inject(CONFIG_TOKEN);
-
+    private store = inject(Store);
+    private router = inject(Router);
     public isSuccess = false;
     public isError = false;
     public isDisabled = false;
@@ -22,19 +25,35 @@ export class LoginComponent {
     public password = "";
 
     public loginForm: FormGroup = new FormGroup({
-        username: new FormControl({ value: null, disabled: false }, [
-            Validators.required,
-        ]),
-        password: new FormControl({ value: null, disabled: false }, [
-            Validators.required,
-        ]),
+        username: new FormControl(null, [Validators.required]),
+        password: new FormControl(null, [Validators.required]),
     });
-
-    constructor(private router: Router) {}
 
     onChangeValue() {
         this.username = this.loginForm.get("control").getRawValue();
         this.password = this.loginForm.get("control").getRawValue();
+    }
+
+    onSubmit() {
+        this.loginForm.markAllAsTouched();
+        if (this.loginForm.valid) {
+            this.isSuccess = true;
+            this.isError = false;
+            this.isDisabled = true;
+            const credentials = this.loginForm.value;
+            // Dispatch the action
+            this.store.dispatch(AuthActions.loginRequested({ credentials }));
+
+            // Redirect to /screen/home after 3 seconds
+            setTimeout(() => {
+                this.router.navigate(["/home"]);
+            }, 3000);
+        } else {
+            this.isError = true;
+            this.isSuccess = false;
+            this.isDisabled = false;
+            this.loginForm.markAllAsTouched();
+        }
     }
 
     onReset() {
@@ -43,26 +62,8 @@ export class LoginComponent {
         this.isSuccess = false;
     }
 
-    onSubmit() {
-        this.loginForm.markAllAsTouched();
-        if (this.loginForm.status !== "VALID") {
-            this.isError = true;
-            this.isSuccess = false;
-            this.isDisabled = false;
-        } else {
-            this.isSuccess = true;
-            this.isError = false;
-            this.isDisabled = true;
-
-            // Redirect to /screen/home after 3 seconds
-            setTimeout(() => {
-                this.router.navigate(["/screen/home"]);
-            }, 3000);
-        }
-    }
-
     navigateToSignUp() {
-        this.router.navigate(["/screen/auth/signup"]);
+        this.router.navigate(["/auth/signup"]);
     }
 
     render(controlName: string): boolean {

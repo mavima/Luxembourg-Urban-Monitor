@@ -19,8 +19,8 @@ import { Router } from "@angular/router";
 export class SignUpComponent {
     protected config: EuiAppConfig = inject(CONFIG_TOKEN);
     public AUTH_ROUTES = {
-        login: "/screen/auth/login",
-        signUp: "/screen/auth/signup",
+        login: "/auth/login",
+        signUp: "/auth/signup",
     };
     public isSuccess = false;
     public isError = false;
