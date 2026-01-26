@@ -22,6 +22,7 @@ export interface User {
     email: string;
     postCount?: number;
     availability?: WeeklyAvailability;
+    location: string;
 }
 
 @Injectable({ providedIn: "root" })
@@ -56,17 +57,17 @@ export class UsersStore {
         }).subscribe({
             next: ({ users, posts }) => {
                 const usersWithData = users.map((user) => {
-                    // 1️⃣ Only posts with long titles
+                    // Only posts with long titles
                     const validPosts = posts.filter(
                         (p) => p.userId === user.id && p.title.length > 40,
                     );
 
-                    // 2️⃣ Take longest ones for availability (max 5)
+                    // Take longest ones for availability (max 5)
                     const availabilityPosts = [...validPosts]
                         .sort((a, b) => b.title.length - a.title.length)
                         .slice(0, 5);
 
-                    // 3️⃣ Convert title length → hours
+                    // Convert title length → hours
                     const hours = availabilityPosts.map((p) =>
                         Math.min(
                             8,
@@ -84,7 +85,7 @@ export class UsersStore {
 
                     return {
                         ...user,
-                        postCount: validPosts.length, // 👈 NOW VARIABLE
+                        postCount: validPosts.length,
                         availability,
                     };
                 });
@@ -177,25 +178,4 @@ export class UsersStore {
 
         return buckets;
     });
-
-    // readonly publishingFrequencyDistribution = computed(() => {
-    //     const users = this._users();
-    //     const buckets = [0, 0, 0, 0, 0];
-
-    //     for (const user of users) {
-    //         const base = user.postCount ?? 0;
-
-    //         const simulated = [base, base + 1, Math.max(0, base - 1)];
-
-    //         for (const count of simulated) {
-    //             if (count === 0) buckets[0]++;
-    //             else if (count === 1) buckets[1]++;
-    //             else if (count <= 3) buckets[2]++;
-    //             else if (count <= 6) buckets[3]++;
-    //             else buckets[4]++;
-    //         }
-    //     }
-
-    //     return buckets;
-    // });
 }

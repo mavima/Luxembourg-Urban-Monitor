@@ -33,20 +33,25 @@
                             *ngFor="let user of users()"
                             class="eui-avatar-wrapper"
                         >
-                            <eui-avatar-image
-                                class="eui-avatar-image eui-avatar-image--default"
-                            >
-                                <eui-avatar-icon>
-                                    <eui-icon-svg
+                            <eui-avatar euiSizeS>
+                                <eui-avatar-image
+                                    imageUrl="https://i.pravatar.cc/150?img={{
+                                        user.id
+                                    }}"
+                                    class="eui-avatar-image eui-avatar-image--default"
+                                >
+                                    <!-- <eui-avatar-icon> -->
+                                    <!-- <eui-icon-svg
                                         icon="person-circle:outline"
-                                    ></eui-icon-svg>
-                                </eui-avatar-icon>
-                            </eui-avatar-image>
-                            <eui-avatar-content class="eui-avatar-content">
-                                <eui-avatar-content-label>
-                                    {{ user.name }}
-                                </eui-avatar-content-label>
-                            </eui-avatar-content>
+                                    ></eui-icon-svg> -->
+                                    <!-- </eui-avatar-icon> -->
+                                </eui-avatar-image>
+                                <eui-avatar-content class="eui-avatar-content">
+                                    <eui-avatar-content-label>
+                                        {{ user.name }}
+                                    </eui-avatar-content-label>
+                                </eui-avatar-content>
+                            </eui-avatar>
                         </li>
                     </ul>
                 </eui-page-column-body>
