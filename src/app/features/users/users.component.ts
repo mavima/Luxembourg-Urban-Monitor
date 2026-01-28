@@ -71,16 +71,6 @@ export class Users implements OnInit {
         this.store.dispatch(UsersActions.loadUsers());
     }
 
-    // Popover
-
-    // openUserPopover(event: Event, user: User) {
-    //     this.selectedUser = user;
-    //     const anchorEl = event.currentTarget as HTMLElement | null;
-    //     if (anchorEl && this.popover) {
-    //         this.popover.openPopover(new ElementRef(anchorEl));
-    //     }
-    // }
-
     openUserPopover(event: Event, user: User) {
         this.selectedUser = user;
         const anchorEl = event.currentTarget as HTMLElement;
