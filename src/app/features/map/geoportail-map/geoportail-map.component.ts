@@ -17,8 +17,8 @@ declare const lux: {
 
 @Component({
     selector: "app-geoportail-map",
-    templateUrl: "./geoportail-map.html",
-    styleUrls: ["./geoportail-map.scss"],
+    templateUrl: "./geoportail-map.component.html",
+    styleUrls: ["./geoportail-map.component.scss"],
 })
 export class GeoportailMapComponent implements AfterViewInit {
     @ViewChild("mapDiv", { static: true })
