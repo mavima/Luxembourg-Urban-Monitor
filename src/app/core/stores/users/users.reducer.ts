@@ -1,30 +1,31 @@
-import { UsersState } from "./users.state";
-import {
-    LoadUsersAction,
-    LoadUsersSuccessAction,
-    LoadUsersFailureAction,
-} from "./users.actions";
+import { createReducer, on } from "@ngrx/store";
+import { UsersActions } from "./users.actions";
+import { initialUsersState } from "./users.state";
 
-export const usersReducer = {
-    loadUsers: (state: UsersState, _action?: LoadUsersAction): UsersState => ({
+export const usersReducer = createReducer(
+    initialUsersState,
+
+    on(UsersActions.loadUsers, (state) => ({
         ...state,
         loading: true,
-    }),
+        error: null,
+    })),
 
-    loadUsersSuccess: (
-        state: UsersState,
-        action: LoadUsersSuccessAction,
-    ): UsersState => ({
+    on(UsersActions.loadUsersSuccess, (state, { users }) => ({
         ...state,
-        users: action.users,
+        users,
         loading: false,
-    }),
+    })),
 
-    loadUsersFailure: (
-        state: UsersState,
-        _action?: LoadUsersFailureAction,
-    ): UsersState => ({
+    on(UsersActions.loadUsersFailure, (state, { error }) => ({
         ...state,
         loading: false,
-    }),
-};
+        error,
+    })),
+
+    on(UsersActions.clearErrors, (state) => ({
+        ...state,
+        error: null,
+    })),
+);
+``;

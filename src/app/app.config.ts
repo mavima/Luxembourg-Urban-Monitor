@@ -30,10 +30,13 @@ import { appConfig as euiAppConfig } from "../config";
 import { environment } from "../environments/environment";
 import { provideAnimations } from "@angular/platform-browser/animations";
 import { authInterceptor } from "./core/interceptors/auth.interceptor";
-import { provideStore } from "@ngrx/store";
+import { provideStore, provideState } from "@ngrx/store";
 import { provideEffects } from "@ngrx/effects";
 import { authReducer } from "./core/stores/auth/auth.reducer";
 import { AuthEffects } from "./core/stores/auth/auth.effects";
+import { usersReducer } from "./core/stores/users/users.reducer";
+import { UsersEffects } from "./core/stores/users/users.effects";
+import { USERS_FEATURE_KEY } from "./core/stores/users/users.selectors";
 import { provideStoreDevtools } from "@ngrx/store-devtools";
 
 /**
@@ -96,6 +99,8 @@ export const appConfig: ApplicationConfig = {
         provideAnimations(),
         provideStore({ auth: authReducer }),
         provideEffects([AuthEffects]),
+        provideState(USERS_FEATURE_KEY, usersReducer),
+        provideEffects([UsersEffects]),
         provideStoreDevtools({
             maxAge: 25, // Retains last 25 states
             logOnly: !isDevMode(), // Only allows logging in production

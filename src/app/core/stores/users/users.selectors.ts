@@ -1,31 +1,33 @@
-import { computed, Signal } from "@angular/core";
+import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { UsersState } from "./users.state";
 
-export function selectUsers(state: Signal<UsersState>) {
-    return computed(() => state().users);
-}
+export const USERS_FEATURE_KEY = "users";
 
-export function selectLoading(state: Signal<UsersState>) {
-    return computed(() => state().loading);
-}
+export const selectUsersState =
+    createFeatureSelector<UsersState>(USERS_FEATURE_KEY);
 
-export function selectTotalUsers(state: Signal<UsersState>) {
-    return computed(() => state().users.length);
-}
+export const selectUsers = createSelector(selectUsersState, (s) => s.users);
+export const selectLoading = createSelector(selectUsersState, (s) => s.loading);
+export const selectError = createSelector(selectUsersState, (s) => s.error);
 
-export function selectUserNames(state: Signal<UsersState>) {
-    return computed(() => state().users.map((u) => u.name));
-}
+export const selectTotalUsers = createSelector(
+    selectUsers,
+    (users) => users.length,
+);
 
-export function selectPostCounts(state: Signal<UsersState>) {
-    return computed(() => state().users.map((u) => u.postCount ?? 0));
-}
+export const selectUserNames = createSelector(selectUsers, (users) =>
+    users.map((u) => u.name),
+);
 
-export function selectAvgAvailability(state: Signal<UsersState>) {
-    return computed(() => {
-        const users = state().users;
+export const selectPostCounts = createSelector(selectUsers, (users) =>
+    users.map((u) => u.postCount ?? 0),
+);
 
-        if (!users.length) return [0, 0, 0, 0, 0];
+// Your complex derived selectors, ported 1:1:
+export const selectAvgAvailabilityPerDay = createSelector(
+    selectUsers,
+    (users) => {
+        if (!users.length) return [0, 0, 0, 0, 0] as const;
 
         const totals = { mon: 0, tue: 0, wed: 0, thu: 0, fri: 0 };
         let count = 0;
@@ -40,7 +42,7 @@ export function selectAvgAvailability(state: Signal<UsersState>) {
             count++;
         }
 
-        if (!count) return [0, 0, 0, 0, 0];
+        if (!count) return [0, 0, 0, 0, 0] as const;
 
         return [
             Math.round(totals.mon / count),
@@ -48,15 +50,15 @@ export function selectAvgAvailability(state: Signal<UsersState>) {
             Math.round(totals.wed / count),
             Math.round(totals.thu / count),
             Math.round(totals.fri / count),
-        ];
-    });
-}
+        ] as const;
+    },
+);
 
-export function selectPublishingFrequency(state: Signal<UsersState>) {
-    return computed(() => {
+export const selectPublishingFrequencyDistribution = createSelector(
+    selectUsers,
+    (users) => {
         const buckets = [1, 2, 0, 0, 0];
-
-        for (const user of state().users) {
+        for (const user of users) {
             if (!user.availability) continue;
 
             const weeklyHours =
@@ -81,22 +83,17 @@ export function selectPublishingFrequency(state: Signal<UsersState>) {
                 else buckets[4]++;
             }
         }
-
         return buckets;
-    });
-}
+    },
+);
 
-export function selectUsersPerLocation(state: Signal<UsersState>) {
-    return computed(() => {
-        const counts = new Map<string, number>();
-
-        for (const u of state().users) {
-            counts.set(u.location, (counts.get(u.location) ?? 0) + 1);
-        }
-
-        return {
-            labels: [...counts.keys()],
-            series: [...counts.values()],
-        };
-    });
-}
+export const selectUsersPerLocation = createSelector(selectUsers, (users) => {
+    const counts = new Map<string, number>();
+    for (const u of users) {
+        counts.set(u.location, (counts.get(u.location) ?? 0) + 1);
+    }
+    return {
+        labels: [...counts.keys()],
+        series: [...counts.values()],
+    };
+});

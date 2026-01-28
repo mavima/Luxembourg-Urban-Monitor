@@ -1,0 +1,104 @@
+<eui-page>
+    <eui-page-content>
+        <!-- Loading -->
+        <p *ngIf="loading$ | async">Loading users…</p>
+
+        <!-- Table + Donut row -->
+        <div class="dashboard-row" *ngIf="!(loading$ | async)">
+            <eui-card>
+                <eui-card-content>
+                    <div class="eui-table__scrollable-wrapper">
+                        <table euiTable isTableCompact [data]="users$ | async">
+                            <ng-template euiTemplate="header">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Posts</th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template let-user euiTemplate="body">
+                                <tr>
+                                    <td>{{ user.name }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.postCount }}</td>
+                                </tr>
+                            </ng-template>
+                        </table>
+                    </div>
+                </eui-card-content>
+            </eui-card>
+
+            <eui-card>
+                <eui-card-header>
+                    <eui-card-header-title>
+                        Users by Location
+                    </eui-card-header-title>
+                </eui-card-header>
+
+                <eui-card-content>
+                    <eui-apex-chart
+                        [series]="(usersPerLocation$ | async)?.series ?? []"
+                        [labels]="(usersPerLocation$ | async)?.labels ?? []"
+                        [chart]="donutChart"
+                        [dataLabels]="donutDataLabels"
+                    >
+                    </eui-apex-chart>
+                </eui-card-content>
+            </eui-card>
+        </div>
+
+        <!-- Line + Bar charts row -->
+        <div class="dashboard-row" *ngIf="!(loading$ | async)">
+            <eui-card>
+                <eui-card-header>
+                    <eui-card-header-title>
+                        Average availability per weekday
+                    </eui-card-header-title>
+                </eui-card-header>
+
+                <eui-card-content>
+                    <eui-apex-chart
+                        [series]="[
+                            {
+                                name: 'Avg availability (hours)',
+                                data: (avgAvailabilityPerDay$ | async) ?? [],
+                            },
+                        ]"
+                        [chart]="chart"
+                        [stroke]="stroke"
+                        [xaxis]="xaxis"
+                        [yaxis]="yaxis"
+                    >
+                    </eui-apex-chart>
+                </eui-card-content>
+            </eui-card>
+
+            <eui-card>
+                <eui-card-header>
+                    <eui-card-header-title>
+                        Publishing frequency per user
+                    </eui-card-header-title>
+                </eui-card-header>
+
+                <eui-card-content>
+                    <eui-apex-chart
+                        [series]="[
+                            {
+                                name: 'Users',
+                                data:
+                                    (publishingFrequencyDistribution$
+                                        | async) ?? [],
+                            },
+                        ]"
+                        [chart]="chartColumns"
+                        [xaxis]="xaxisColumns"
+                        [plotOptions]="plotOptions"
+                        [dataLabels]="dataLabelsColumns"
+                    >
+                    </eui-apex-chart>
+                </eui-card-content>
+            </eui-card>
+        </div>
+    </eui-page-content>
+</eui-page>

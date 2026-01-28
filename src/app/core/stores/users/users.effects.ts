@@ -1,17 +1,30 @@
 import { inject, Injectable } from "@angular/core";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { UsersActions } from "./users.actions";
 import { UsersService } from "../../services/users.service";
-import { loadUsersSuccess, loadUsersFailure } from "./users.actions";
-import { map, catchError } from "rxjs/operators";
-import { of } from "rxjs";
+import { catchError, map, switchMap, of } from "rxjs";
 
-@Injectable({ providedIn: "root" })
+@Injectable()
 export class UsersEffects {
+    private actions$ = inject(Actions);
     private usersService = inject(UsersService);
 
-    loadUsersEffect() {
-        return this.usersService.getEnrichedUsers().pipe(
-            map((users) => loadUsersSuccess(users)),
-            catchError(() => of(loadUsersFailure())),
-        );
-    }
+    loadUsers$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(UsersActions.loadUsers),
+            switchMap(() =>
+                this.usersService.getEnrichedUsers().pipe(
+                    map((users) => UsersActions.loadUsersSuccess({ users })),
+                    catchError((err) =>
+                        of(
+                            UsersActions.loadUsersFailure({
+                                error: (err?.message ??
+                                    "Failed to load users") as string,
+                            }),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+    );
 }
