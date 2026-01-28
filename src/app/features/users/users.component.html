@@ -17,11 +17,32 @@
 
                             <ng-template let-user euiTemplate="body">
                                 <tr>
-                                    <td>{{ user.name }}</td>
+                                    <td
+                                        class="clickable-name"
+                                        (click)="openUserPopover($event, user)"
+                                        (keydown.enter)="
+                                            openUserPopover($event, user)
+                                        "
+                                        (keydown.space)="
+                                            openUserPopover($event, user)
+                                        "
+                                        role="button"
+                                        tabindex="0"
+                                        aria-label="Open user details"
+                                    >
+                                        {{ user.name }}
+                                    </td>
                                     <td>{{ user.email }}</td>
                                     <td>{{ user.postCount }}</td>
                                 </tr>
                             </ng-template>
+
+                            <app-user-popover-card
+                                #userPopoverCard
+                                [user]="selectedUser"
+                                [title]="'User details'"
+                                (closed)="onPopoverClosed()"
+                            ></app-user-popover-card>
                         </table>
                     </div>
                 </eui-card-content>

@@ -1,0 +1,11 @@
+:host {
+    display: contents; // so the host doesn't affect layout
+}
+
+.popover-avatar {
+    width: 50% !important;
+    height: auto;
+    margin: auto;
+    margin-top: 1rem !important;
+    object-fit: contain;
+}

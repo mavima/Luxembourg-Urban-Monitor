@@ -1,10 +1,20 @@
-import { Component, OnInit, inject } from "@angular/core";
+import {
+    Component,
+    OnInit,
+    ViewChild,
+    ElementRef,
+    inject,
+} from "@angular/core";
+import { UserPopoverCardComponent } from "@shared/user-popover-card/user-popover-card.component";
 import { CommonModule } from "@angular/common";
 import { Store } from "@ngrx/store";
 
 import { EUI_PAGE } from "@eui/components/eui-page";
 import { EUI_TABLE } from "@eui/components/eui-table";
 import { EUI_CARD } from "@eui/components/eui-card";
+// import { EUI_POPOVER, EuiPopoverComponent } from "@eui/components/eui-popover";
+// import { EUI_BUTTON } from "@eui/components/eui-button";
+
 import {
     EuiApexChartComponent,
     ApexAxisChartSeries,
@@ -25,6 +35,8 @@ import {
     selectUsersPerLocation,
 } from "../../core/stores/users/users.selectors";
 
+import { User } from "../../core/models/users.model";
+
 @Component({
     selector: "app-users",
     standalone: true,
@@ -33,7 +45,10 @@ import {
         ...EUI_PAGE,
         ...EUI_TABLE,
         ...EUI_CARD,
+        // ...EUI_POPOVER,
+        // ...EUI_BUTTON,
         EuiApexChartComponent,
+        UserPopoverCardComponent,
     ],
     templateUrl: "./users.component.html",
     styleUrl: "./users.component.scss",
@@ -41,7 +56,7 @@ import {
 export class Users implements OnInit {
     private store = inject(Store);
 
-    // NgRx selectors as Observables
+    // ---- NgRx selectors as Observables ----
     users$ = this.store.select(selectUsers);
     loading$ = this.store.select(selectLoading);
     avgAvailabilityPerDay$ = this.store.select(selectAvgAvailabilityPerDay);
@@ -49,13 +64,42 @@ export class Users implements OnInit {
         selectPublishingFrequencyDistribution,
     );
     usersPerLocation$ = this.store.select(selectUsersPerLocation);
+    selectedUser: User | null = null;
+    @ViewChild("userPopoverCard") userPopoverCard!: UserPopoverCardComponent;
 
     ngOnInit(): void {
-        // trigger loading once
         this.store.dispatch(UsersActions.loadUsers());
     }
 
-    // Chart configs (static)
+    // Popover
+
+    // openUserPopover(event: Event, user: User) {
+    //     this.selectedUser = user;
+    //     const anchorEl = event.currentTarget as HTMLElement | null;
+    //     if (anchorEl && this.popover) {
+    //         this.popover.openPopover(new ElementRef(anchorEl));
+    //     }
+    // }
+
+    openUserPopover(event: Event, user: User) {
+        this.selectedUser = user;
+        const anchorEl = event.currentTarget as HTMLElement;
+        this.userPopoverCard.open(anchorEl);
+    }
+
+    onPopoverClosed() {
+        this.selectedUser = null;
+    }
+
+    // Optional avatar
+    avatarUrl(u: User | null): string {
+        if (!u) return "";
+        return `https://i.pravatar.cc/160?u=${encodeURIComponent(
+            u.email ?? String(u.id),
+        )}`;
+    }
+
+    // ---- Charts config ----
     chart: ApexChart = { type: "line", height: 350, toolbar: { show: false } };
     stroke: ApexStroke = { curve: "straight", width: 3 };
     xaxis: ApexXAxis = { categories: ["Mon", "Tue", "Wed", "Thu", "Fri"] };
