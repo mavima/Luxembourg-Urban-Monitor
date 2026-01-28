@@ -80,12 +80,6 @@ export class Users implements OnInit {
     };
     dataLabelsColumns: ApexDataLabels = { enabled: false };
 
-    donutChart: ApexChart = { type: "donut", height: 250 };
+    donutChart: ApexChart = { type: "donut", height: 350 };
     donutDataLabels = { enabled: true };
-
-    // In template you’ll map selectors to chart series using async pipe, e.g.:
-    // [series]="[{ name: 'Avg availability (hours)', data: (avgAvailabilityPerDay$ | async) ?? [] }]"
-    // [series]="[{ name: 'Users', data: (publishingFrequencyDistribution$ | async) ?? [] }]"
-    // [series]="(usersPerLocation$ | async)?.series"
-    // [labels]="(usersPerLocation$ | async)?.labels"
 }

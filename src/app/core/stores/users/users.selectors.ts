@@ -27,7 +27,7 @@ export const selectPostCounts = createSelector(selectUsers, (users) =>
 export const selectAvgAvailabilityPerDay = createSelector(
     selectUsers,
     (users) => {
-        if (!users.length) return [0, 0, 0, 0, 0] as const;
+        if (!users.length) return [0, 0, 0, 0, 0];
 
         const totals = { mon: 0, tue: 0, wed: 0, thu: 0, fri: 0 };
         let count = 0;
@@ -42,7 +42,7 @@ export const selectAvgAvailabilityPerDay = createSelector(
             count++;
         }
 
-        if (!count) return [0, 0, 0, 0, 0] as const;
+        if (!count) return [0, 0, 0, 0, 0];
 
         return [
             Math.round(totals.mon / count),
@@ -50,7 +50,7 @@ export const selectAvgAvailabilityPerDay = createSelector(
             Math.round(totals.wed / count),
             Math.round(totals.thu / count),
             Math.round(totals.fri / count),
-        ] as const;
+        ];
     },
 );
 
