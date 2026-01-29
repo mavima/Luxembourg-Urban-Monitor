@@ -97,10 +97,8 @@ export const appConfig: ApplicationConfig = {
         AppStarterService,
         provideRouter(routes),
         provideAnimations(),
-        provideStore({ auth: authReducer }),
-        provideEffects([AuthEffects]),
-        provideState(USERS_FEATURE_KEY, usersReducer),
-        provideEffects([UsersEffects]),
+        provideStore({ auth: authReducer, users: usersReducer }),
+        provideEffects([AuthEffects, UsersEffects]),
         provideStoreDevtools({
             maxAge: 25, // Retains last 25 states
             logOnly: !isDevMode(), // Only allows logging in production

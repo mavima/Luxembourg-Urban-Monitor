@@ -45,8 +45,6 @@ import { User } from "../../core/models/users.model";
         ...EUI_PAGE,
         ...EUI_TABLE,
         ...EUI_CARD,
-        // ...EUI_POPOVER,
-        // ...EUI_BUTTON,
         EuiApexChartComponent,
         UserPopoverCardComponent,
     ],
