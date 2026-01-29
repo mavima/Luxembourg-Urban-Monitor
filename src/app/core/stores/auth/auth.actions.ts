@@ -5,9 +5,7 @@ const AUTH_EVENTS = {
 export const AuthActions = createActionGroup({
     source: "Urban Auth API",
     events: {
-        "Login Requested": props<{
-            credentials: { username: string; password: string };
-        }>(),
+        "Login Requested": emptyProps(),
         "Handle Auth Callback": emptyProps(),
         "Login Success": props<{ user: any; token: string }>(),
         "Login Failure": props<{ error: string }>(),

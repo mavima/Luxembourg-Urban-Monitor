@@ -5,10 +5,11 @@ import { from, switchMap } from "rxjs";
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
     const auth0 = inject(Auth0Service);
-
+    //TODO: Improve interceptors
+    return next(req);
     // Skip public endpoints
     if (req.url.includes("/auth/")) {
-        return next(req);
+        // return next(req);
     }
 
     return auth0.getAccessTokenSilently().pipe(

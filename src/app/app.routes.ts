@@ -37,4 +37,11 @@ export const routes: Routes = [
                 (m) => m.MAPS_ROUTES,
             ),
     },
+    {
+        path: "callback",
+        loadChildren: () =>
+            import("./features/auth/callback/callback.component").then(
+                (m) => m.AuthCallbackComponent,
+            ),
+    },
 ];

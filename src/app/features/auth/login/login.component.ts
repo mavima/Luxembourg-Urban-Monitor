@@ -35,25 +35,26 @@ export class LoginComponent {
     }
 
     onSubmit() {
-        this.loginForm.markAllAsTouched();
-        if (this.loginForm.valid) {
-            this.isSuccess = true;
-            this.isError = false;
-            this.isDisabled = true;
-            const credentials = this.loginForm.value;
-            // Dispatch the action
-            this.store.dispatch(AuthActions.loginRequested({ credentials }));
+        // this.loginForm.markAllAsTouched();
+        // if (this.loginForm.valid) {
+        //     this.isSuccess = true;
+        //     this.isError = false;
+        //     this.isDisabled = true;
+        //     const credentials = this.loginForm.value;
+        //     // Dispatch the action
+        //     this.store.dispatch(AuthActions.loginRequested({ credentials }));
 
-            // Redirect to /screen/home after 3 seconds
-            setTimeout(() => {
-                this.router.navigate(["/home"]);
-            }, 3000);
-        } else {
-            this.isError = true;
-            this.isSuccess = false;
-            this.isDisabled = false;
-            this.loginForm.markAllAsTouched();
-        }
+        //     // Redirect to /screen/home after 3 seconds
+        //     setTimeout(() => {
+        //         this.router.navigate(["/home"]);
+        //     }, 3000);
+        // } else {
+        //     this.isError = true;
+        //     this.isSuccess = false;
+        //     this.isDisabled = false;
+        //     this.loginForm.markAllAsTouched();
+        // }
+        this.store.dispatch(AuthActions.loginRequested());
     }
 
     onReset() {
