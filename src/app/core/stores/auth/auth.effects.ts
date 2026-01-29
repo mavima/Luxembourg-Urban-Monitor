@@ -12,17 +12,27 @@ export class AuthEffects {
     private authService = inject(AuthService);
     private router = inject(Router);
 
+    // Start Auth0 login
     login$ = createEffect(() =>
         this.actions$.pipe(
             ofType(AuthActions.loginRequested),
-            exhaustMap(({ credentials }) =>
-                // Using your existing mockLogin method
-                this.authService.mockLogin(credentials).pipe(
-                    map((res) =>
-                        AuthActions.loginSuccess({
-                            user: res.user,
-                            token: res.token,
-                        }),
+            exhaustMap(() =>
+                this.authService.login().pipe(
+                    // Auth0 will redirect → effect completes
+                    map(() => ({ type: "[Auth] Redirected" })),
+                ),
+            ),
+        ),
+    );
+
+    // Handle redirect after Auth0 login
+    handleCallback$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(AuthActions.handleAuthCallback),
+            exhaustMap(() =>
+                this.authService.handleRedirect().pipe(
+                    map(({ user, token }) =>
+                        AuthActions.loginSuccess({ user, token }),
                     ),
                     catchError((err) =>
                         of(AuthActions.loginFailure({ error: err.message })),
@@ -32,7 +42,7 @@ export class AuthEffects {
         ),
     );
 
-    // Success : Navigate to home
+    // Navigate on success
     loginSuccess$ = createEffect(
         () =>
             this.actions$.pipe(
@@ -42,19 +52,13 @@ export class AuthEffects {
         { dispatch: false },
     );
 
-    // Logout: Navigate to login
+    // Logout
     logout$ = createEffect(
         () =>
             this.actions$.pipe(
                 ofType(AuthActions.logout),
-                tap(() => {
-                    // Clear your AuthService/LocalStorage
-                    this.authService.logout();
-
-                    // Redirect to login
-                    this.router.navigate(["/auth/login"]);
-                }),
+                tap(() => this.authService.logout()),
             ),
-        { dispatch: false }, // We don't dispatch a new action after this
+        { dispatch: false },
     );
 }

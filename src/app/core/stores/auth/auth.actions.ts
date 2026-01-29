@@ -8,6 +8,7 @@ export const AuthActions = createActionGroup({
         "Login Requested": props<{
             credentials: { username: string; password: string };
         }>(),
+        "Handle Auth Callback": emptyProps(),
         "Login Success": props<{ user: any; token: string }>(),
         "Login Failure": props<{ error: string }>(),
         "Clear Errors": emptyProps(),

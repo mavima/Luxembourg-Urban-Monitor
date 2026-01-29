@@ -43,15 +43,6 @@ export class AppComponent {
         { label: "Urban Maps", url: "maps" },
         { label: "User Directory", url: "users" },
         { label: "Products", url: "products" },
-        {
-            label: "Module 1",
-            url: "module1",
-            children: [
-                { label: "page 1", url: "module1/page1" },
-                { label: "page 2", url: "module1/page2" },
-            ],
-        },
-        { label: "Module 2", url: "module2" },
     ];
 
     notificationItems = [

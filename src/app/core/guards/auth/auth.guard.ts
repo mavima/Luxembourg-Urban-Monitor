@@ -1,18 +1,24 @@
 import { inject } from "@angular/core";
-import { Router, CanActivateFn } from "@angular/router";
-import { AuthService } from "../../services/auth/auth.service";
+import { CanActivateFn, Router } from "@angular/router";
+import { AuthService as Auth0Service } from "@auth0/auth0-angular";
+import { map, take } from "rxjs/operators";
 import { GLOBAL_ROUTES } from "src/config/routes";
 
 export const authGuard: CanActivateFn = (route, state) => {
-    const routes = GLOBAL_ROUTES;
-    const authService = inject(AuthService);
+    const auth0 = inject(Auth0Service);
     const router = inject(Router);
+    const routes = GLOBAL_ROUTES;
 
-    if (authService.isAuthenticated) {
-        return true;
-    }
+    return auth0.isAuthenticated$.pipe(
+        take(1),
+        map((isAuthenticated) => {
+            if (isAuthenticated) {
+                return true;
+            }
 
-    // Redirect to login page
-    router.navigate([routes.login], { queryParams: { returnUrl: state.url } });
-    return false;
+            return router.createUrlTree([routes.login], {
+                queryParams: { returnUrl: state.url },
+            });
+        }),
+    );
 };
