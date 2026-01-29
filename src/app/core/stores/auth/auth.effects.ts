@@ -1,7 +1,7 @@
 // src/app/core/stores/auth/auth.effects.ts
 import { inject, Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { AuthService } from "../../services/auth.service";
+import { AuthService } from "../../services/auth/auth.service";
 import { AuthActions } from "./auth.actions";
 import { catchError, map, exhaustMap, of, tap } from "rxjs";
 import { Router } from "@angular/router";

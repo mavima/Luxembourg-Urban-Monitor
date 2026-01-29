@@ -29,7 +29,7 @@ import {
 import { appConfig as euiAppConfig } from "../config";
 import { environment } from "../environments/environment";
 import { provideAnimations } from "@angular/platform-browser/animations";
-import { authInterceptor } from "./core/interceptors/auth.interceptor";
+import { authInterceptor } from "./core/interceptors/auth/auth.interceptor";
 import { provideStore } from "@ngrx/store";
 import { provideEffects } from "@ngrx/effects";
 import { authReducer } from "./core/stores/auth/auth.reducer";

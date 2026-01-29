@@ -8,7 +8,7 @@ import {
     SignupRequest,
     AuthResponse,
     User,
-} from "../models/auth/auth.model";
+} from "../../models/auth/auth.model";
 
 @Injectable({
     providedIn: "root",
