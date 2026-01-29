@@ -4,7 +4,7 @@ import { EUI_PAGE } from "@eui/components/eui-page";
 import { EUI_BUTTON } from "@eui/components/eui-button"; // Added for buttons
 import { TranslateModule } from "@ngx-translate/core";
 import { RouterLink } from "@angular/router"; // Added for navigation
-import { GeoportailMapComponent } from "../map/geoportail-map/geoportail-map";
+import { GeoportailMapComponent } from "../map/geoportail-map/geoportail-map.component";
 
 @Component({
     selector: "app-home",

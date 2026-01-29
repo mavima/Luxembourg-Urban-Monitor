@@ -1,0 +1,16 @@
+.dashboard-row {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.clickable-name {
+    cursor: pointer;
+    color: var(--eui-color-primary-60);
+    text-decoration: underline;
+}
+.clickable-name:focus {
+    outline: 2px solid var(--eui-color-primary-60);
+    outline-offset: 2px;
+}
