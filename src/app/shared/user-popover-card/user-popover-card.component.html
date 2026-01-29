@@ -1,0 +1,58 @@
+<eui-popover #popover [title]="user?.name || title" (closed)="onClosed()">
+    <eui-card style="max-width: 22rem">
+        <eui-card-media
+            [imageUrl]="avatarUrl(user)"
+            class="popover-avatar"
+        ></eui-card-media>
+
+        <eui-card-content>
+            <div class="eui-u-mb-xs">
+                <span class="eui-u-f-bold">Email:</span>
+                <span class="eui-u-color-text-60">{{ user?.email }}</span>
+            </div>
+
+            <div class="eui-u-mb-xs" *ngIf="user?.phone as phone">
+                <span class="eui-u-f-bold">Phone:</span>
+                <span class="eui-u-ml-xs">{{ phone }}</span>
+            </div>
+
+            <div class="eui-u-mb-xs" *ngIf="user?.company?.name as companyName">
+                <span class="eui-u-f-bold">Company:</span>
+                <span class="eui-u-ml-xs">{{ companyName }}</span>
+            </div>
+
+            <div class="eui-u-mb-xs" *ngIf="user?.website as website">
+                <span class="eui-u-f-bold">Website:</span>
+                <a
+                    class="eui-u-ml-xs"
+                    [href]="'http://' + website"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    {{ website }}
+                </a>
+            </div>
+
+            <div *ngIf="user?.postCount !== undefined">
+                <span class="eui-u-f-bold">Posts:</span>
+                <span class="eui-u-ml-xs">{{ user?.postCount }}</span>
+            </div>
+        </eui-card-content>
+
+        <eui-card-footer>
+            <eui-card-footer-action-buttons
+                class="eui-u-flex justify-content-end"
+            >
+                <button
+                    euiButton
+                    euiBasicButton
+                    euiSizeS
+                    type="button"
+                    (click)="close()"
+                >
+                    <span euiLabel>Close</span>
+                </button>
+            </eui-card-footer-action-buttons>
+        </eui-card-footer>
+    </eui-card>
+</eui-popover>
