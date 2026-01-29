@@ -1,7 +1,7 @@
 import { createActionGroup, props, emptyProps } from "@ngrx/store";
 const AUTH_EVENTS = {
-    LOGIN_REQUESTED : 'Login Requested'
-}
+    LOGIN_REQUESTED: "Login Requested",
+};
 export const AuthActions = createActionGroup({
     source: "Urban Auth API",
     events: {
@@ -14,4 +14,3 @@ export const AuthActions = createActionGroup({
         Logout: emptyProps(),
     },
 });
-P
