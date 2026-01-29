@@ -50,4 +50,9 @@ export const routes: Routes = [
                 (m) => m.MAPS_ROUTES,
             ),
     },
+    {
+        path: "products",
+        loadChildren: () =>
+            import("./features/products/products.routes").then((m) => m.PRODUCTS_ROUTES),
+    }    
 ];

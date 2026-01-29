@@ -35,6 +35,8 @@ import { provideEffects } from "@ngrx/effects";
 import { authReducer } from "./core/stores/auth/auth.reducer";
 import { AuthEffects } from "./core/stores/auth/auth.effects";
 import { provideStoreDevtools } from "@ngrx/store-devtools";
+import { productsReducer } from "./core/stores/products/products.reducer";
+import { ProductsEffects } from "./core/stores/products/products.effects";
 
 /**
  * The provided function is injected at application startup and executed during
@@ -94,8 +96,8 @@ export const appConfig: ApplicationConfig = {
         AppStarterService,
         provideRouter(routes),
         provideAnimations(),
-        provideStore({ auth: authReducer }),
-        provideEffects([AuthEffects]),
+        provideStore({ auth: authReducer, products: productsReducer }),
+        provideEffects([AuthEffects, ProductsEffects]),
         provideStoreDevtools({
             maxAge: 25, // Retains last 25 states
             logOnly: !isDevMode(), // Only allows logging in production
