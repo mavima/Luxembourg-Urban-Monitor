@@ -19,6 +19,7 @@
   },
   "private": true,
   "dependencies": {
+    "@auth0/auth0-angular": "^2.5.0",
     "@eui/deps-base": "21.0.2",
     "@ngrx/effects": "^21.0.1",
     "@ngrx/store": "^21.0.1",
